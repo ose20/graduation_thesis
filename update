@@ -1,0 +1,3 @@
+#!/bin/sh
+
+platex paper.tex && platex paper.tex && dvipdfmx paper.dvi && open paper.pdf
