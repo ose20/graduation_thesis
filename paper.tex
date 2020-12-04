@@ -1,5 +1,10 @@
-\documentclass{jsarticle}
+\documentclass[dvipdfmx]{jsarticle}
 %\setcounter{secnumdepth}{5}
+\usepackage{otf}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
 \usepackage{amsthm}
 
 %ユーザ自身による体裁のカスタマイズが許される状況なら以下が使える．
@@ -19,13 +24,13 @@
 \begin{abstract}
   私の所属するゼミでは，その実施形式をオンラインにするか対面にするかを毎回メンバーによる
   投票で決めている．これは，複数人の選好を集約して1つの選択肢を選び取る社会的選択の問題である．
-  そこで本論では，このゼミ形式の決定手続きが意見集約としていかなる性質を持っているかを述べる．
+  そこで本論文では，このゼミ形式の決定手続きが意見集約としていかなる性質を持っているかを述べる．
   その足掛かりとして，まずはボルダルールと戦略的操作に関する議論を紹介する．その後，ゼミの実施
   形式決定手続きの性質について議論する．そこでは，各個人は選択肢に対する強選好を持っており，
   各回の投票ではその時点で実現可能な選択肢の中で最も好ましいものを実現するような形式に投票する
   という仮定を置く．その元で，この手続きがペア全敗者を選ばないこと，いかなる2人以上の人数と
   2回以上のゼミの回数に対してもボルダ勝者と異なる選択肢を選び得ること，そして，回数に関する
-  単峰性が成り立っているときにはその中位の回数に関連の深い選択肢が選ばれることを述べる．
+  単峰性が成り立っているときにはその中位の回数に関連の深い選択肢が選ばれることを示す．
 \end{abstract}
 
 %目次の出力
@@ -34,25 +39,106 @@
 
 \section{はじめに}
 \subsection{問題設定の背景}
+本論文が執筆された2020年は，COVID-19の感染拡大の影響で前期の講義がほぼすべてオンラインに移行した．しかし
+後期になるとこの制限が緩和されたことで，ゼミに関しては対面形式での実施が可能になった．私の所属するゼミでは
+オンラインと対面を併用し，毎回次のゼミの実施形式のみをオンラインか対面かの2択投票で決めることになった．
+
+この手続きは複数人の選好を集約して1つの選択肢を選び取る社会的選択の問題と見ることができる．従って，その
+集約方法がいかなる性質を持っているかを問うことができ，それを探究したいというのが本論文執筆の動機である．
+
 \subsection{社会的選択理論とは何か}
+2人以上の個人で1つの意思決定をする際に，どのように異なる選好同士の折り合いをつけ，意思を1つにまとめ上げるのが
+よいのか，その意見集約方法の理論的性質を分析するのが社会的選択理論の主題の1つである．ここで，そのモチベーション
+を共有するために，意見集約方法の性質が重要になる例を2つ述べる．
+
+1つは多数決による例である．ある中学生のクラスで授業が休みになり，その時間を自由に使ってよい状況を考える．
+ただし担任の教員には監督責任があるので，クラスの全員が同じ場所にいなければならない．このクラスには全員で30人
+の生徒がおり，18人は体を動かして遊びたいと思っており，残る少数派の12人は教室で静かに読書をしたいと思っている．
+このとき，「校庭でサッカーをして過ごす」という選択肢と「教室で読書をして過ごす」という選択肢で多数決を行えば，
+前者が18人の指示を得て多数決に勝利する．一方でこの2つの選択肢に加えて「体育館でバスケットボールを
+して過ごす」という選択肢が存在し，体を動かして遊びたい18人の生徒がサッカーとバスケットボールの選択肢に
+半々に割れた場合には，多数決の勝者は「教室で読書をして過ごす」になる．この結果は全体における多数派である，
+体を動かして遊びたい18人にとっては一番望ましくない選択肢であろう．これは似たような選択肢の存在によって
+票の割れが発生し，結果として少数派の意見が採用される事例である．この場合，多数決は意見集約方法として
+好ましいだろうか，そうでないならば，他に優れた方法はあるだろうか．
+
+もう1つはMalkevitch(1990)によって提示された次の例で，意見集約方法の選択が最終的な結果を変えてしまうものである．
+まず設定として，55人の有権者が5つの選択肢$a,b,c,d,e$について，表~\ref{tab:Malkevitch}のような
+選好を持っているとし，意見集約方法として次の4つを考える．
+
+1つ目は多数決である．この場合は$a$が18票を得て勝利する．
+
+\begin{table}[h]
+  \caption{Malkevitchによる例}\label{tab:Malkevitch}
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c|c}
+      & 18人 & 12人 & 10人 & 9人 & 4人 & 2人 \\ \hline
+    1位 & a & b & c & d & e & e \\
+    2位 & b & e & b & c & b & c \\
+    3位 & e & d & e & e & d & d \\
+    4位 & c & c & d & b & c & b \\
+    5位 & b & a & a & a & a & a \\
+\end{tabular}
+  \end{center}
+\end{table}
+
+2つ目，多数決の勝利者が過半数の指示を得ていない場合は2位と決選投票を行う方法を採用すればどうなるだろうか．
+多数決で1位の$a$が獲得した18票は過半数ではないので，2位の$b$と決選投票が行われる．表~\ref{tab:Malkevitch}
+によれば，$a$を$b$より好むものは18人おり，その逆は37人いるので，最終的には$b$が勝利する．これは多数決と
+異なる選択肢を選び取っている．
+
+3つ目は，毎回の多数決で最少票の選択肢を消去していく方法である．すると1段回目では6票しか集まらなかった
+$e$が消去され，2段回目では9票しか集まらなかった$d$が消去され，3段回目では16票しか集まらなかった$b$
+が消去され，最後の段階では18票しか集まらなかった$a$が消去されて$c$が残る．これは前の2つのいずれとも
+異なる選択肢を選び取っている．
+
+4つ目は，順位ごとに重み付けの得点を与えて，その総得点が一番高いものを選ぶ方法である．ここでは1位に5点，
+2位に4点，\ldots，5位に1点を与えることにする．このとき，選択肢を引数にその総得点を返す関数を$p(\cdot)$
+と表すと，それぞれの総得点は
+\begin{align*}
+  p(a) &= 5 \times 18 \ +\  4 \times 0 \ +\ 3 \times 0 \ +\  2 \times 0\ +\ 1 \times 37 = 127 \\
+  p(b) &= 5 \times 12 \ +\  4 \times 14 \ +\ 3 \times 0 \ +\  2 \times 11 \ +\ 1 \times 18 = 156 \\
+  p(c) &= 5 \times 10 \ +\  4 \times 11 \ +\ 3 \times 0 \ +\  2 \times 34 \ +\ 1 \times 0 = 162 \\
+  p(d) &= 5 \times 9 \ +\  4 \times 18 \ +\ 3 \times 18 \ +\  2 \times 10 \ +\ 1 \times 0 = 191 \\
+  p(e) &= 5 \times 6 \ +\  4 \times 12 \ +\ 3 \times 37 \ +\  2 \times 0 \ +\ 1 \times 0 = 189
+\end{align*}
+のように計算されるので，総得点が一番高いのは$d$となる．この結果は前の3つのいずれとも異なるものである．
+
+この例が示すように，有権者の選好が変わらなくても，その集約方法を変えると最終的な結果も変わってきてしまう．
+最初の中学生による多数決の例とこのMalkevitchの例が示唆するものは，どの集約方法を採用するべきか，
+採用される集約方法はどのような性質を満たしているべきかという問題が重要だということである．
+
 \subsection{本誌の構成}
+2節では意見集約方法のベンチマークとして多数決とボルダルールを取り上げる．特に多数決がペア全敗者を
+選んでしまうという問題点を抱えていること，ボルダルールはそれを回避するばかりか，他にも様々な優れた
+性質を持っていることを紹介する．
+
+3節では意見の集約結果に対する戦略的な操作の可能性について取り上げる．
+まず有名な不可能性定理であるギバート＝サタスウェイト定理について述べたあと，個々の選好が単峰性という
+特別な条件を満たすときには，戦略的操作を不可能にするような，非独裁的な集約ルールが存在することを
+紹介する．
+
+4節では，2，3節の内容を踏まえながら，私のゼミが採用している意見集約方法が持つ性質について
+議論する．具体的にはこの方法がペア全敗者を選ばないこと，2人以上かつ2回以上ならボルダ勝者と異なる選択肢を
+選びうる選好組が存在すること，そして各々の選好が回数に関する単峰性を持つときには，その回数の中位と
+関連する選択肢が選ばれることを示す．
 
 \section{多数決の問題点とベンチマークとしてのボルダルール}
-\subsection{この節で述べること}
+\subsection{多数決の問題点}
+多数決は，恐らく最も有名な意見集約方法の一つである．その方法は，各有権者が1つの選択肢に投票し，
 
-\subsection{多数決}
 
 \subsection{ボルダルール}
 \subsubsection{ボルダルールの優れた性質}
 \subsubsection{ボルダルールの弱点}
 
 \section{戦略的操作の可能性}
-\subsection{この節で述べること}
+
 \subsection{ギバート＝サタスウェイト定理}
 \subsection{中位投票者定理}
 
 \section{ゼミ形式決定問題の性質}
-\subsection{この節で述べること}
+
 \subsection{ゼミ形式決定問題の形式化}
 \subsection{ボルダルールとの比較}
 \subsection{単峰性との関連性}
@@ -61,35 +147,38 @@
 
 \begin{thebibliography}{9}
   \bibitem{招待}
-  坂井豊貴 (2018)『社会的選択理論への招待』日本評論社
+  坂井豊貴 (2018)『社会的選択理論への招待』日本評論社．
   \bibitem{メカデザ}
-  坂井豊貴他 (2020)『メカニズムデザイン』ミネルヴァ書房
+  坂井豊貴他 (2020)『メカニズムデザイン』ミネルヴァ書房．
   \bibitem{単峰性}
   Black, D. (1948) On the Rationale of Group Decision-making, Journal of Political Economy,
-  Vol. 56, pp.23-34
+  Vol. 56, pp.23-34.
   \bibitem{black}
   Black, D. (1976) Partial Justification of the Borda Count, Public Choice,
-  Vol. 28, pp. 1-15
+  Vol. 28, pp. 1-15.
   \bibitem{Coughlin}
   Coughlin, P. (1979) A Direct Characterization of Black's First Borda Count,
-  Economic Letters, Vol. 4, pp. 131-133
+  Economic Letters, Vol. 4, pp. 131-133.
   \bibitem{borda}
   de Borda J-C (1784) M\'{e}moire sur les \'{e}lections au scrutin, Histoire de l'Acad\'{e}mie
-  Royal des Science, pp. 657-664
+  Royal des Science, pp. 657-664.
   \bibitem{Farkas}
   Farkas, D. and Nitzan, S. (1979) The Borda Rule and Pareto Stability: A Comment,
-  Econometrica, Vol. 47, pp. 1305-1306
+  Econometrica, Vol. 47, pp. 1305-1306.
   \bibitem{gibbard}
   Gibbard, A. (1973) Manipulation of voting schemes: A general result, Econometrica, Vol. 41,
-  pp. 587-601
+  pp. 587-601.
+  \bibitem{malk}
+    Malkevitch, J. (1990) Mathematical Theory of Elections, Annals of the New York
+    Academy of Science, pp. 89-97.
   \bibitem{revisit}
   Okamoto, N. and Sakai, T. (2019) The Borda rule and the pairwise-majority-loser
   revisited, Review of Economic Design, Springer; Scioety for Economic Design, vol 23(1)
-  , pages 75-89, June
+  , pages 75-89, June.
   \bibitem{satterthwaite}
   Satterthwaite, M.A. (1975) Strategy-proofness and Arrow's conditions:
   Existence and correspondence theorems for voting procedures and social
-  welfare functions, Journal of Economic Theory, Vol. 10, pp. 187-217
+  welfare functions, Journal of Economic Theory, Vol. 10, pp. 187-217.
 \end{thebibliography}
 
 
