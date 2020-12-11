@@ -43,7 +43,7 @@
   
   次に，ボルダルールの欠点でも見られた戦略的操作に関する問題を，ボルダルール
   だけでなく意思集約方法一般に関する議論として紹介する．そこではまずギバート＝サタスウェイト定理を
-  引用してある条件を満たした非独裁的な意思集約方法は必ず戦略的操作が可能になってしまうことを述べる．次に
+  引用し，ある条件を満たした非独裁的な意思集約方法は必ず戦略的操作が可能になってしまうことを述べる．次に
   選好の単峰性という概念を紹介し，すべての個人の選好がこの単峰性という条件を満たすときには戦略的操作を
   不可能にする意思集約方法が存在することを述べる．
   
@@ -687,8 +687,289 @@ $m=3$かつ$n=3$で，各個人の選好が表~$\ref{tab:3人の選好組}$で�
   ゆえに$d_1\cdots d_{m-1}0$はペア全敗者ではない．
 \end{proof}
 
-\subsection{単峰性との関連性}\label{subsec:単峰性との関連}
+今証明された命題は，ゼミ形式決定手続きがボルダルールと同じように好ましい性質を持つというものであった．
+しかし今度は，ゼミ形式決定手続きがボルダルールとは根本的には違うものであることを示す．
 
+\begin{proposition}
+  $n$と$m$をそれぞれ$2$以上の任意の自然数とする．このとき，$n$人による$m$回のゼミ形式決定手続きにおいて，
+  ボルダ勝者と異なる選択肢を選び取るような選好組$\succsim$が存在する．
+\end{proposition}
+
+\begin{proof}
+  証明は表~\ref{tab:場合分け}にある煩雑な場合分けによる．以下ではcase$1$からcase$5$まで
+  それぞれ証明する．また，選択肢を引数としてそのボルダ得点を返す関数を$p(\cdot)$で表す．
+  \begin{table}[h]
+    \caption{証明の場合分け表}\label{tab:場合分け}
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|}\hline
+        \multicolumn{2}{|c|}{} & \multicolumn{4}{c|}{$m$} \\ \cline{3-6}
+        \multicolumn{2}{|c|}{} & 2 & 3 & 4 & $\cdots$ \\ \hline
+          & 2 & case4 & \multicolumn{3}{c|}{case5} \\ \cline{2-6}
+          & 3 & case3 & case2 & \multicolumn{2}{c|}{case1} \\ \cline{2-6}
+        $n$ & 4 & case4 & \multicolumn{3}{c|}{case5} \\ \cline{2-6}
+          & 5 &  &  &  \multicolumn{2}{c|}{}  \\ \cline{2-2}
+          & $\vdots$ & \raisebox{.5\normalbaselineskip}[0pt][0pt]{case3}
+            & \raisebox{.5\normalbaselineskip}[0pt][0pt]{case2}
+            & \multicolumn{2}{c|}{\raisebox{.5\normalbaselineskip}[0pt][0pt]{case1}} \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+  \noindent{}case$1\colon$$(n = 3$または$n \geq 5)$かつ$m \geq 4$．
+  \begin{table}[h]
+    \caption{case1での選好}\label{tab:case1}
+    \begin{center}
+    \begin{tabular}{c|c|c|c}\hline
+      & タイプA & タイプB & タイプC \\ \hline
+    1位 & $b=1010\cdots$ & $c=0101\cdots$ & $d=1100\cdots$ \\
+    2位 & $c=0101\cdots$ & $b=1010\cdots$ & $c=0101\cdots$ \\
+    3位 & $\vdots$ & $\vdots$ & $b=1010\cdots$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\ \hline
+    \end{tabular}
+    \end{center}
+  \end{table}
+  表~\ref{tab:case1}のような$3$種類の選好を考える．ここで選択肢$b,\ c,\ d$の定義はそれぞれ以下で与えられる．
+  \[
+    b(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i = m \ \text{or} \ i \text{が偶数} \\
+      1 & \mbox{otherwise}
+    \end{array} \right.
+    \hspace{6mm}
+    c(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i \text{が奇数} \\
+      1 & \mbox{otherwise}
+    \end{array} \right.
+    \hspace{6mm}
+    d(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i=3,4 \\
+      1 & \mbox{if}\ i=1,2 \\
+      b_i & \mbox{otherwise}
+    \end{array} \right.
+  \]
+  ここで，さらに$n$の偶奇に注目して場合分けを行う．
+
+  \noindent{}$n$が偶数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n}{2}-1$，
+  $\frac{n}{2}-1$，$2$人とする．このとき，ゼミ形式決定手続きによって実現する選択肢は$b$である．ところが
+  $b$と$c$のボルダ得点を計算すると，
+  \begin{gather*}
+    p(b) = 2^m(\frac{n}{2}-1) + (2^m-1)(\frac{n}{2}-1) + 2(2^m-2) \\
+    p(c) = 2^m(\frac{n}{2}-1) + (2^m-1)(\frac{n}{2}-1) + 2(2^m-1)
+  \end{gather*}
+  であるから選択肢$b$はボルダ勝者ではない．
+
+  \noindent{}$n$が奇数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n-1}{2}$，
+  $\frac{n-1}{2}$，$1$人とする．このときも，ゼミ形式決定手続きによって実現する選択肢は$b$である．
+  しかし同様にして，
+  \begin{gather*}
+    p(b) = 2^m(\frac{n-1}{2}) + (2^m-1)(\frac{n-1}{2}) + 2^m - 2 \\
+    p(c) = 2^m(\frac{n-1}{2}) + (2^m-1)(\frac{n-1}{2}) + 2^m - 1
+  \end{gather*}
+  であるから選択肢$b$はボルダ勝者ではない．
+
+  \noindent{}case$2\colon$$(n = 3$または$n \geq 5)$かつ$m = 3$．
+  表~\ref{tab:case2}のような$3$種類の選好を考える．ここでも$n$の偶奇に注目して場合分けを行う．
+  \begin{table}[h]
+    \caption{case2での選好}\label{tab:case2}
+    \begin{center}
+      \begin{tabular}{c|c|c|c}\hline
+            & タイプA & タイプB & タイプC \\ \hline
+        1位 & 101 & 011 & 110 \\ 
+        2位 & 011 & 101 & 011 \\ 
+        3位 & 110 & 110 & 101 \\ 
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+  \noindent{}$n$が偶数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n}{2}-1$，
+  $\frac{n}{2}-1$，$2$人とする．このとき，ゼミ形式決定手続きによって実現する選択肢は$101$である．
+  ところが$101$と$011$のボルダ得点を計算すると，
+  \begin{gather*}
+    p(101) = 8(\frac{n}{2}-1) + 7(\frac{n}{2}-1) + 6 \\
+    p(011) = 8(\frac{n}{2}-1) + 7(\frac{n}{2}-1) + 7
+  \end{gather*}
+  となるから選択肢$101$はボルダ勝者ではない．
+
+  \noindent{}$n$が奇数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n-1}{2}$，
+  $\frac{n-1}{2}$，$1$人とする．このときも，ゼミ形式決定手続きによって実現する選択肢は$101$であるが，
+  $101$と$011$のボルダ得点はそれぞれ
+  \begin{gather*}
+    p(101) = 8(\frac{n-1}{2}) + 7(\frac{n-1}{2}) + 6 \\
+    p(011) = 8(\frac{n-1}{2}) + 7(\frac{n-1}{2}) + 7
+  \end{gather*}
+  となって選択肢$101$はボルダ勝者ではないことがわかる．
+
+  \noindent{}case$3\colon$$(n = 3$または$n \geq 5)$かつ$m = 2$．
+  表~\ref{tab:case3}のような$3$種類の選好を考える．上の場合と同様に$n$の偶奇で場合分けを行う．
+  \begin{table}[h]
+    \caption{case3での選好}\label{tab:case3}
+    \begin{center}
+      \begin{tabular}{c|c|c|c}\hline
+          & タイプA & タイプB & タイプC \\ \hline
+        1位 & 10 & 01 & 11 \\
+        2位 & 01 & 10 & 01 \\
+        3位 & 00 & 00 & 10 \\
+        4位 & 11 & 11 & 00 \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+  
+
+
+\noindent{}$n$が偶数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n}{2}-1$，
+$\frac{n}{2}-1$，$2$人とする．このとき，ゼミ形式決定手続きによって実現する選択肢は$10$である．
+ところが$10$と$01$のボルダ得点を計算すると，
+\begin{gather*}
+  p(10) = 4(\frac{n}{2}-1) + 3(\frac{n}{2}-1) + 4 \\
+  p(01) = 4(\frac{n}{2}-1) + 3(\frac{n}{2}-1) + 6
+\end{gather*}
+となるから選択肢$10$はボルダ勝者ではない．
+
+\noindent{}$n$が奇数の場合$\colon$タイプA，B，Cの選好を持つ人数をそれぞれ$\frac{n-1}{2}$，
+  $\frac{n-1}{2}$，$1$人とする．このときも，ゼミ形式決定手続きによって実現する選択肢は$10$である．
+  しかし$10$と$01$のボルダ得点はそれぞれ
+  \begin{gather*}
+    p(10) = 4(\frac{n-1}{2}) + 3(\frac{n-1}{2}) + 2 \\
+    p(01) = 4(\frac{n-1}{2}) + 3(\frac{n-1}{2}) + 3
+  \end{gather*}
+  となって選択肢$10$はボルダ勝者ではないことがわかる．
+
+  \noindent{}case$4\colon$$(n = 2$または$n = 4)$かつ$m = 2$．
+  表~\ref{tab:case4}のような$2$種類の選好を考える．
+  \begin{table}[h]
+    \caption{case4での選好}\label{tab:case4}
+    \begin{center}
+      \begin{tabular}{c|c|c}\hline
+            & タイプA & タイプB \\ \hline
+        1位 & 10 & 11  \\ 
+        2位 & 01 & 10  \\ 
+        3位 & 00 & 01  \\
+        4位 & 11 & 00  \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+  このときタイプA，Bの選好をも持つ人数をそれぞれ$\frac{n}{2}$，$\frac{n}{2}$とすれば，
+  ゼミ形式決定手続きによって実現する選択肢は$11$となる．定義~\ref{def:ゼミ形式決定手続き}より，
+  各回の形式を決める際に$0$と$1$を支持する人数が同数だった場合には$1$が選ばれるからである．
+  しかし一方で
+  \begin{gather*}
+    p(11) = \frac{5}{2}n \\
+    p(10) = \frac{7}{2}n
+  \end{gather*}
+  となるので，選択肢$11$はボルダ勝者ではない．
+
+  \noindent{}case$5\colon$$(n = 2$または$n = 4)$かつ$m \geq 3$．
+  表~\ref{tab:case5}のような$2$種類の選好を考える．ただし選択肢$b,\ c,\ d$の定義は次で
+  与えられる．\<\footnote{$3$つの選択肢の$4$桁目以降はここでは任意でよいが，後の議論のために$b,\ c,\ d$ですべて
+  同じ値をとることにする．その値をここではすべて$1$にした．}\
+  \[
+    b(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i = 1 \\
+      1 & \mbox{otherwise}
+    \end{array} \right.
+    \hspace{6mm}
+    c(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i = 3 \\
+      1 & \mbox{otherwise}
+    \end{array} \right.
+    \hspace{6mm}
+    d(i)
+    = \left\{ \begin{array}{@{\,}rl@{}}
+      0 & \mbox{if}\ i=2 \\
+      1 & \mbox{otherwise}
+    \end{array} \right.
+  \]
+  
+  \begin{table}[h]
+    \caption{case5での選好}\label{tab:case5}
+    \begin{center}
+      \begin{tabular}{c|c|c}\hline
+          & タイプA & タイプB \\ \hline
+        1位 & $b = 011\cdots$ & $d = 101\cdots$ \\
+        2位 & $c = 110\cdots$ & $b = 011\cdots$ \\
+        3位 & $d = 101\cdots$ & $c = 110\cdots$ \\
+        $\vdots$ & $\vdots$ & $\vdots$ \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+  \noindent{}ここでタイプA，Bの選好を持つ人数をどちらも$\frac{n}{2}$人とする．このとき，ゼミ形式決定手続きによって
+  選ばれる選択肢は$c$となる．しかしボルダ得点を計算すると
+  \begin{gather*}
+    p(b) = \frac{n}{2}(2^{m+1}-1) \\
+    p(c) = \frac{n}{2}(2^{m+1}-3)
+  \end{gather*}
+  となるので，$c$はボルダ勝者にはならない．以上ですべての場合の証明が終了した．
+\end{proof}
+
+\subsection{単峰性との関連}\label{subsec:単峰性との関連}
+  この節では，\ref{subsec:単峰性と中位選択関数}節で紹介した単峰性に関する議論をゼミ形式決定手続きに応用する．
+  具体的には，単峰性の概念を直和に分解された選択肢の集合上に拡張し，その拡張された概念に特徴付けられた
+  選択肢がゼミ形式決定手続きによって選ばれることを証明する．
+
+  まず例として次のような状況を考える．あるゼミのメンバーは，選択肢の良し悪しに関する第一の基準として
+  対面形式の実施回数を気にしているとする．例えばこの人は対面形式を$k$回行う選択肢を最も高く順序づけており，対面
+  形式の実施回数がそこから多い方であれ少ない方であれ離れるほど，より好ましくなくなっていく．このとき，選択肢全体を
+  対面形式を何回行うかによってグループ分けすると，そのグループ同士の上に単峰性が成り立っていることになる．この例のような
+  議論を扱うために，以降いくつかの定義を導入する．
+
+  先の例では，ある選択肢が対面形式のゼミを何回実施するのかということに注目した．まずはこれを表す記法を定義する．
+  \begin{definition}
+    選択肢$a \in A$に対して$\mathrm{pop}(a)$を次で定義する．
+    \[
+      \mathrm{pop}(a) \stackrel{\mathrm{def}}{=} |\{k \in \{1, 2, \ldots, m \} \ | \
+      a(k) = 1 \}|
+    \]
+  \end{definition}
+
+  \begin{example}
+    $m=5$とする．このとき，$10101,\ 11000,\ 00000 \in A$に対して，
+    \[
+      \mathrm{pop}(10101) = 3, \hspace{5mm} \mathrm{pop}(11000) = 2, \hspace{5mm} \mathrm{pop}(00000) = 0
+    \]
+    である．
+  \end{example}
+
+  各選択肢の対面実施回数を使って何をしたかったかといえば，その回数ごとに選択肢全体のグループ分けをすることである．
+  そのグループは今定義した$\mathrm{pop(\cdot)}$を使って次のように容易に定義できる．
+
+  \begin{definition}
+    $k(0 \leq k \leq m)$に対して
+    \[
+      S_k \stackrel{\mathrm{def}}{=} \{a \in A\ | \ \mathrm{pop}(a) = k \}
+    \]
+    と定める．$S_k$は対面形式を$k$回行うような選択肢全体の集合である．
+  \end{definition}
+
+  \begin{example}
+    $m = 3$とする．このとき，
+    \begin{align*}
+      S_0 =& \{ 000 \} \\
+      S_1 =& \{ 001,\ 010,\ 100 \} \\
+      S_2 =& \{ 011,\ 101,\ 110 \} \\
+      S_3 =& \{ 111 \}
+    \end{align*}
+    である．
+  \end{example}
+
+  以上を用いて，対面形式の実施回数に注目したときの単峰性を定義することができる．ここでは特にこれを
+  回数に関する単峰性と呼ぶ．
+  \begin{definition}[回数に関する単峰性]
+    個人$i$の選好$\succsim_i$が回数に関する単峰性を満たすとは
+    \begin{multline*}
+      \exists k(\succsim_i) \in \{0, 1, \ldots, m\} \ \ \forall \mathnormal{l},\mathnormal{l}' \in \{0, 1, \ldots, m\} \\
+      (\mathnormal{l}' < \mathnormal{l} < k \vee k < \mathnormal{l} < \mathnormal{l}') \Rightarrow
+      (\forall a' \in S_{\mathnormal{l}'} \ \ \forall a \in S_{\mathnormal{l}} \ \ \forall b \in S_k
+      \ \ b \succ_i a \succ_i a')
+    \end{multline*}
+    が成り立つことである．
+  \end{definition}
 \section{まとめ}
 
 \section*{謝辞}
@@ -702,7 +983,7 @@ $m=3$かつ$n=3$で，各個人の選好が表~$\ref{tab:3人の選好組}$で�
   坂井豊貴他 (2020)『メカニズムデザイン』ミネルヴァ書房．
   \bibitem{単峰性}
   Black, D. (1948) On the Rationale of Group Decision-making, Journal of Political Economy,
-  Vol. 56, pp.23-34.
+  Vol. 56, pp. 23-34.
   \bibitem{black}
   Black, D. (1976) Partial Justification of the Borda Count, Public Choice,
   Vol. 28, pp. 1-15.
@@ -724,7 +1005,7 @@ $m=3$かつ$n=3$で，各個人の選好が表~$\ref{tab:3人の選好組}$で�
   \bibitem{revisit}
   Okamoto, N. and Sakai, T. (2019) The Borda rule and the pairwise-majority-loser
   revisited, Review of Economic Design, Springer; Scioety for Economic Design, vol 23(1)
-  , pages 75-89, June.
+  , pp. 75-89, June.
   \bibitem{satterthwaite}
   Satterthwaite, M.A. (1975) Strategy-proofness and Arrow's conditions:
   Existence and correspondence theorems for voting procedures and social
