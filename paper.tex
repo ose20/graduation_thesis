@@ -30,6 +30,7 @@
 \date{\today}
 \maketitle
 
+\vfill
 \begin{abstract}
   著者の所属するゼミでは，その実施形式をオンラインにするか対面にするかを毎回メンバーによる
   投票によって決定している．これは複数人の選好を集約して1つの選択肢を選び取る社会的選択の問題である．
@@ -56,8 +57,10 @@
   ボルダルールと異なる選択肢を選び取る選好組が存在すること．そして3つ目は，個々の選好が対面形式の実施回数に
   対して単峰性が成り立っているときは，その中位の回数に特徴付けられた選択肢が実現することである．
 \end{abstract}
+\vfill
 
 %目次の出力
+\newpage
 \tableofcontents
 \clearpage
 
@@ -394,8 +397,12 @@ $x \in X$が独裁者$i$にとって最も好ましい選択肢$b \in X$であ�
   $b(\succsim_i) \in A$がただ一つ存在して，任意の$k, k' \in \{ 1, 2, \ldots, \mathnormal{l} \}$
   について
   \[
-    [a_k < a_{k'} < b(\succsim_i) \text{または} b(\succsim_i) < a_{k'} < a_k]
-    \Rightarrow b(\succsim_i) \succ_i a_{k'} \succ_i a_{k}
+    a_k \neq b(\succsim_i) \Rightarrow b(\succsim_i) \succ_i a_k
+  \]
+  かつ
+  \[
+    [a_{k'} < a_{k} < b(\succsim_i) \text{または} b(\succsim_i) < a_{k} < a_{k'}]
+    \Rightarrow b(\succsim_i) \succ_i a_{k} \succ_i a_{k'}
   \]
   を満たすことである．また，$A$上の単峰的な選好すべてからなる集合を$\mathcal{T}$と書く
 \end{DEfinition}
@@ -961,15 +968,67 @@ $\frac{n}{2}-1$，$2$人とする．このとき，ゼミ形式決定手続き�
   以上を用いて，対面形式の実施回数に注目したときの単峰性を定義することができる．ここでは特にこれを
   回数に関する単峰性と呼ぶ．
   \begin{definition}[回数に関する単峰性]
-    個人$i$の選好$\succsim_i$が回数に関する単峰性を満たすとは
-    \begin{multline*}
-      \exists k(\succsim_i) \in \{0, 1, \ldots, m\} \ \ \forall \mathnormal{l},\mathnormal{l}' \in \{0, 1, \ldots, m\} \\
-      (\mathnormal{l}' < \mathnormal{l} < k \vee k < \mathnormal{l} < \mathnormal{l}') \Rightarrow
-      (\forall a' \in S_{\mathnormal{l}'} \ \ \forall a \in S_{\mathnormal{l}} \ \ \forall b \in S_k
-      \ \ b \succ_i a \succ_i a')
-    \end{multline*}
+    個人$i$の選好$\succsim_i$が回数に関する単峰性を満たすとは，ベストな回数$k(\succsim_i) \in \{0,1,\ldots, m\}$がただ一つ存在して，
+    任意の$l,l' \in \{0,1,\ldots, m\}$に対して
+    \[
+      k(\succsim_i) \neq l \Rightarrow \forall b \in S_{k(\succsim_i)} \ \forall a \in S_l \ b \succ_i a
+    \]
+    かつ
+    \[
+      [\mathnormal{l}' < \mathnormal{l} < k(\succsim_i) \text{または} k(\succsim_i) < \mathnormal{l} < \mathnormal{l}'] \Rightarrow
+      \forall a' \in S_{\mathnormal{l}'} \ \ \forall a \in S_{\mathnormal{l}} \ \ \forall b \in S_{k(\succsim_i)}
+      \ \ b(\succsim_i) \succ_i a \succ_i a'
+    \]
     が成り立つことである．
   \end{definition}
+
+  \begin{table}[h]
+    \caption{回数に関する単峰性を満たした選好}\label{tab:回数に関する単峰性}
+    \begin{center}
+      \begin{tabular}{c|cccccccc}
+          & 1位 & 2位 & 3位 & 4位 & 5位 & 6位 & 7位 & 8位 \\ \hline
+        $\succsim_1$ & 101 & 011 & 110 & 100 & 001 & 010 & 110 & 000 \\ \hline
+        $\succsim_2$ & 000 & 100 & 010 & 001 & 011 & 101 & 110 & 111 \\
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+\begin{example}
+  $m=3$とする．このとき，表~$\ref{tab:回数に関する単峰性}$における$\succsim_1$と$\succsim_2$は
+  共に回数に関する単峰性を満たしている．また$k(\succsim_1) = 2$，$k(\succsim_2) = 0$である．
+\end{example}
+
+さらに，すべての個人の選好が回数に関する単峰性を満たすときには，各個人にとってベストな回数$k(\succsim_i) \in \{0,1,\ldots,m\}$が
+存在するので，それらの中位を定義することができる．ここでは特にそれを中位回数として定義する．
+
+\begin{definition}[中位回数]
+  すべての個人の選好が回数に関する単峰性を満たすとき，各$i \in I$にとってベストな回数$k(\succsim_1),\ldots,k(\succsim_n)$
+  が存在する．これらの中位を中位回数と呼び，$k^m(\succsim)$と書く．
+  すなわち$k^m(\succsim) \in \{k(\succsim_1),\ k(\succsim_2), \ldots, k(\succsim_n) \}$かつ
+  \begin{gather*}
+    |\{i \in I \ | \ k(\succsim_i) \leq k^m(\succsim) \}| \ \geq \ \frac{n}{2} \\
+    |\{i \in I \ | \ k(\succsim_i) \geq k^m(\succsim) \}| \ \geq \ \frac{n}{2}
+  \end{gather*}
+  を満たす．$n$が偶数のときに中位回数が$2$つ存在する場合があるが，その場合は大きい方\footnote{
+    定義\ref{def:ゼミ形式決定手続き}の各$d_i$を決める箇所において，オンラインと対面が同数だったときに対面ではなく
+    オンラインを採用するならば，ここの中位回数は小さい方にする．
+  }
+  を中位回数とする．
+\end{definition}
+
+この回数に関する単峰性の議論をまとめる．すべての個人の選好が回数に関する単峰性を満たすとき，つまり，
+各個人には最も好ましい対面ゼミの実施回数があり，そこから離れるほどより好ましくなくなるような選好を
+持っているとき，ゼミ形式決定手続きが選び取る選択肢は，対面形式をちょうど中位回数だけ行うような選択肢になる．
+
+\begin{proposition}
+  $f$をゼミ形式決定手続きとし，すべての個人の選好が回数に関する単峰性を満たすとする．
+  このとき中位回数$k^m(\succsim)$が存在して
+  \[
+    f(\succsim) \in S_{k^m(\succsim)}
+  \]
+  が成り立つ．
+\end{proposition}
+
 \section{まとめ}
 
 \section*{謝辞}
